@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="utf-8" />
+  <title>نقشه سفرهای پیلارو</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+    }
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+    .blinking-icon {
+      animation: blink 1.2s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([32.0, 53.0], 2.5);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const pilaroIcon = L.divIcon({
+      html: '<img src="https://pilaro-map.netlify.app/pilaro-logo-small-fixed.png" class="blinking-icon" width="18" height="18">',
+      iconSize: [18, 18],
+      className: ''
+    });
+
+    const visitedPlaces = [
+      { city: "تهران", country: "ایران", lat: 35.6892, lng: 51.3890 },
+      { city: "قم", country: "ایران", lat: 34.6401, lng: 50.8764 },
+      { city: "طبس", country: "ایران", lat: 33.5959, lng: 56.9244 },
+      { city: "شاهرود", country: "ایران", lat: 36.4180, lng: 55.0164 },
+      { city: "تبریز", country: "ایران", lat: 38.0800, lng: 46.2919 },
+      { city: "آبادان", country: "ایران", lat: 30.3473, lng: 48.2934 },
+      { city: "پاریس", country: "فرانسه", lat: 48.8566, lng: 2.3522 },
+      { city: "نیویورک", country: "آمریکا", lat: 40.7128, lng: -74.0060 },
+      { city: "ونکوور", country: "کانادا", lat: 49.2827, lng: -123.1207 },
+      { city: "کالیفرنیا", country: "آمریکا", lat: 36.7783, lng: -119.4179 },
+      { city: "مادرید", country: "اسپانیا", lat: 40.4168, lng: -3.7038 },
+      { city: "برلین", country: "آلمان", lat: 52.5200, lng: 13.4050 },
+      { city: "استانبول", country: "ترکیه", lat: 41.0082, lng: 28.9784 },
+      { city: "ونیز", country: "ایتالیا", lat: 45.4408, lng: 12.3155 }
+    ];
+
+    visitedPlaces.forEach(place => {
+      L.marker([place.lat, place.lng], { icon: pilaroIcon })
+        .addTo(map)
+        .bindPopup(`<b>${place.city}</b><br>${place.country}`);
+    });
+  </script>
+
+</body>
+</html>
